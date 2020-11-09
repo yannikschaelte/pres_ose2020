@@ -68,16 +68,19 @@
                 <li>
                     goal: infer parameters $\theta$ given
                     data $y_\text{obs}$,
-                    i.e. analyze the posterior distribution</li>
+                    i.e. analyze the posterior distribution
+                </li>
                 <li class="fragment">
                     common optimization and sampling methods require
-                    the (unnormalized) likelihood</li>
+                    the (unnormalized) likelihood
+                </li>
                 <li class="fragment">
                     can happen: numerical
                     <strong>evaluation infeasible</strong></li>
                 <li class="fragment">
                     ... but <strong>possible to simulate data</strong>
-                    $y\sim\pi(y|\theta)$</li>
+                    $y\sim\pi(y|\theta)$
+                </li>
             </ul>
         </section>
 
@@ -86,7 +89,8 @@
             <h2>Multi-scale models</h2>
             <img src="img/multiscale_models.svg" class="stretch"
                  alt="Multiscale models"/>
-            <small>based on Hasenauer et al., J. Coup. Sys. and Mult. Dyn. 2015</small>
+            <small>based on Hasenauer et al., J. Coup. Sys. and Mult. Dyn.
+                2015</small>
         </section>
 
 
@@ -143,7 +147,7 @@
         <section data-transition="fade-in slide-out">
             <table>
                 <tr>
-                    <td><h2 style="color: #B71C1C">Failed</span></h2></td>
+                    <td><h2 style="color: #B71C1C">Failed</h2></td>
                     <td><h2 style="color: #1B5E20">Worked</h2></td>
                 </tr>
                 <tr>
@@ -152,11 +156,11 @@
                             <li>multi-start local methods
                                 <ul>
                                     <li>deterministic gradient descent</li>
-                                        <ul>
-                                            <li>Levenberg-Marquardt</li>
-                                            <li>interior-point</li>
-                                            <li>trust-region</li>
-                                        </ul>
+                                    <ul>
+                                        <li>Levenberg-Marquardt</li>
+                                        <li>interior-point</li>
+                                        <li>trust-region</li>
+                                    </ul>
                                     <li>stochastic gradient descent</li>
                                     <li>Bayesian optimization</li>
                                 </ul>
@@ -201,13 +205,15 @@
             <section>
                 <h2>Rejection ABC</h2>
                 <div style="text-align: left">
-                    With distance $d$, threshold $\varepsilon>0$:
+                    With distance $d$, threshold $\varepsilon>0$,
+                    summary statistics $s$:
                     <div class="r-frame">
                         until $N$ acceptances:<br/>
                         <ol>
                             <li>sample $\theta\sim g(\theta)$</li>
                             <li>simulate data $y\sim\pi(y|\theta)$</li>
-                            <li>if $d(s(y), s(y_\text{obs}))\leq\varepsilon$, accept $\theta$ with probability $\propto \frac{g(\theta)}{f(\theta)}$</li>
+                            <li>accept $\theta$ if $d(s(y), s(y_\text{obs}))\leq\varepsilon$
+                            </li>
                         </ol>
                     </div>
                 </div>
@@ -220,22 +226,30 @@
             <section>
                 <h2>Rejection sampling</h2>
                 <div style="text-align: left">
-                    Background: Want to sample from $f$, but can only sample from
+                    Background: Want to sample from $f$, but can only sample
+                    from
                     $g \gg f$.
                     <div class="r-frame">
                         until $N$ acceptances:<br/>
                         <ol>
                             <li>sample $\theta\sim g(\theta)$</li>
-                            <li>accept $\theta$ with probability $\propto \frac{g(\theta)}{f(\theta)}$</li>
+                            <li>accept $\theta$ with probability $\propto
+                                \frac{g(\theta)}{f(\theta)}$
+                            </li>
                         </ol>
                     </div>
                     Accepted $\theta$ are independent samples from $f(\theta)$.<br/>
-                    Let $f=\pi(\theta|y_\text{obs}), g=\pi(\theta) \Rightarrow \frac{\pi(\theta|y_\text{obs})}{\pi(\theta)} \propto \pi(y_\text{obs}|\theta)$
+                    Let $f=\pi(\theta|y_\text{obs}), g=\pi(\theta) \Rightarrow
+                    \frac{\pi(\theta|y_\text{obs})}{\pi(\theta)} \propto
+                    \pi(y_\text{obs}|\theta)$
                     <ul>
                         <li>not available</li>
-                        <li>idea: <strong>circumvent likelihood evaluation</strong>
-                            by <strong>simulating data</strong> and matching them
-                            to the observed data</li>
+                        <li>idea: <strong>circumvent likelihood
+                            evaluation</strong>
+                            by <strong>simulating data</strong> and matching
+                            them
+                            to the observed data
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -248,13 +262,18 @@
                         <ol>
                             <li>sample $\theta\sim g(\theta)$</li>
                             <li>simulate data $y\sim\pi(y|\theta)$</li>
-                            <li>if $y=y_\text{obs}$, accept $\theta$ with probability $\propto \frac{g(\theta)}{f(\theta)}$</li>
+                            <li>accept $\theta$ if $y=y_\text{obs}$
+                            </li>
                         </ol>
                     </div>
                     <ul>
-                        <li>Acceptance probability: $\mathbb{P}[y_\text{obs}]$</li>
+                        <li>Acceptance probability:
+                            $\mathbb{P}[y_\text{obs}]$
+                        </li>
                         <li>can be small in particular for continuous data</li>
-                        <li>idea: accept simulations that are <strong>similar</strong> to $y_\text{obs}$</li>
+                        <li>idea: accept simulations that are
+                            <strong>similar</strong> to $y_\text{obs}$
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -268,13 +287,16 @@
                         <ol>
                             <li>sample $\theta\sim g(\theta)$</li>
                             <li>simulate data $y\sim\pi(y|\theta)$</li>
-                            <li>if $d(y, y_\text{obs})\leq\varepsilon$, accept $\theta$ with probability $\propto \frac{g(\theta)}{f(\theta)}$</li>
+                            <li>accept $\theta$ if $d(y, y_\text{obs})\leq\varepsilon$
+                            </li>
                         </ol>
                     </div>
                     <ul>
                         <li><strong>curse of dimensionality:</strong>
-                            if the data are too high-dimensional, the probability
-                            of simualting similar data sets is small</li>
+                            if the data are too high-dimensional, the
+                            probability
+                            of simulating similar data sets is small
+                        </li>
                         <li>idea: create an informative lower-dimensional
                             representation via <strong>summary statistics
                             </strong></li>
@@ -288,7 +310,8 @@
         <section>
             <h2>Toy example</h2>
             <div style="text-align: left">
-                $y\sim\mathcal{N}(2(\theta-2)\theta(\theta+2), 1+\theta^2)$, $y_\text{obs}=2$<br/>
+                $y\sim\mathcal{N}(2(\theta-2)\theta(\theta+2), 1+\theta^2)$,
+                $y_\text{obs}=2$<br/>
                 $\pi(\theta) = U[-3,3]$<br/>
                 $d=|{\cdot}|_1$<br/>
                 $N=1000$ acceptances
@@ -307,11 +330,13 @@
             <h2>Approximate Bayesian Posterior</h2>
             <p>
                 We want:
-                \[\pi(\theta|y_\text{obs}) \propto \color{red}{p(y_\text{obs}|\theta)}\pi(\theta)\]
+                \[\pi(\theta|y_\text{obs}) \propto
+                \color{red}{p(y_\text{obs}|\theta)}\pi(\theta)\]
             </p>
             <p class="fragment">
                 We get:
-                \[\pi_{ABC}(\theta|s(y_\text{obs})) \propto \color{red}{\int I(\{d(s(y), s(y_\text{obs})) \leq
+                \[\pi_{ABC}(\theta|s(y_\text{obs})) \propto \color{red}{\int
+                I(\{d(s(y), s(y_\text{obs})) \leq
                 \varepsilon\})p(y|\theta)\operatorname{dy}}\pi(\theta) \approx
                 \frac{1}{N} \sum_{i=1}^N\delta_{\theta^{(i)}}(\theta)\]
                 with distance $d$, threshold $\varepsilon>0$, and summary
@@ -330,11 +355,13 @@
             </ul>
             <div class="fragment">
                 <blockquote>
-                    Far better an approximate answer to the right question, which
+                    Far better an approximate answer to the right question,
+                    which
                     is often vague, than an exact answer to the wrong question,
                     which can always be made precise.
                 </blockquote>
-                <div style="text-align: right"><small>John Tukey 1962</small></div>
+                <div style="text-align: right"><small>John Tukey 1962</small>
+                </div>
             </div>
         </section>
 
@@ -344,10 +371,12 @@
             <ul>
                 <li>Rejection ABC, the basic ABC algorithm, can be
                     <strong>inefficient</strong> due to repeatedly sampling
-                    from the prior</li>
+                    from the prior
+                </li>
                 <li>smaller $\varepsilon$ leads to lower acceptance rates</li>
                 <li>many (likelihood-based) algorithms like IS, MCMC, SMC, SA
-                    have <strong>ABC-fied</strong> versions</li>
+                    have <strong>ABC-fied</strong> versions
+                </li>
             </ul>
         </section>
 
@@ -365,7 +394,9 @@
 
 
         <section data-background="#e4003a" data-background-transition="zoom">
-            <img src="img/logo_white.svg" style="background: #ffffff00; border: none" alt="pyABC logo white"/><br/>
+            <img src="img/logo_white.svg"
+                 style="background: #ffffff00; border: none"
+                 alt="pyABC logo white"/><br/>
             <span style="font-family: monospace">github.com/icb-dcm/pyabc</span><br/>
             <small>Klinger et al., Bioinformatics 2018</small>
         </section>
@@ -381,7 +412,7 @@
         <section>
             <h2>Easy to use</h2>
             <pre>
-                <code class="python" data-trim>
+                <code class="python" data-trim data-line-numbers>
 # define problem
 abc = pyabc.ABCSMC(model, prior, distance)
 
@@ -516,7 +547,8 @@ abc.run()
             <div style="display: flex">
                 <ul>
                     <li>parameter estimation when we cannot evaluate the
-                        likelihood is challenging</li>
+                        likelihood is challenging
+                    </li>
                     <li>ABC allows for reliable statistical inference</li>
                     <li>pyABC provides an easy-to-use framework</li>
                 </ul>
@@ -533,15 +565,18 @@ abc.run()
             <img src="img/icon_book_inkscape.svg" height="70px"/>
             <ul>
                 <li>Sisson, Scott A., Yanan Fan, and Mark Beaumont, eds.
-                    Handbook of approximate Bayesian computation.
-                    CRC Press, 2018.</li>
+                    "Handbook of approximate Bayesian computation."
+                    CRC Press, 2018.
+                </li>
                 <li>Beaumont, Mark A. "Approximate Bayesian computation in
                     evolution and ecology." Annual review of ecology,
-                    evolution, and systematics 41 (2010): 379-406.</li>
+                    evolution, and systematics 41 (2010): 379-406.
+                </li>
                 <li>Martin, Gael M., David T. Frazier, and Christian P.
                     Robert. "Computing Bayes: Bayesian Computation from
                     1763 to the 21st Century." arXiv preprint
-                    arXiv:2004.06425 (2020).</li>
+                    arXiv:2004.06425 (2020).
+                </li>
             </ul>
         </section>
 
@@ -588,10 +623,6 @@ Reveal.initialize({
 });
 //Reveal.configure({ slideNumber: 'c/t' });
 //Reveal.configure({ showSlideNumber: 'all' });
-
-
-
-
 </script>
 </body>
 </html>
