@@ -234,7 +234,7 @@
                         <ol>
                             <li>sample $\theta\sim g(\theta)$</li>
                             <li>accept $\theta$ with probability $\propto
-                                \frac{g(\theta)}{f(\theta)}$
+                                \frac{f(\theta)}{g(\theta)}$
                             </li>
                         </ol>
                     </div>
@@ -260,7 +260,7 @@
                     <div class="r-frame">
                         until $N$ acceptances:<br/>
                         <ol>
-                            <li>sample $\theta\sim g(\theta)$</li>
+                            <li>sample $\theta\sim \pi(\theta)$</li>
                             <li>simulate data $y\sim\pi(y|\theta)$</li>
                             <li>accept $\theta$ if $y=y_\text{obs}$
                             </li>
@@ -285,7 +285,7 @@
                     <div class="r-frame">
                         until $N$ acceptances:<br/>
                         <ol>
-                            <li>sample $\theta\sim g(\theta)$</li>
+                            <li>sample $\theta\sim \pi(\theta)$</li>
                             <li>simulate data $y\sim\pi(y|\theta)$</li>
                             <li>accept $\theta$ if $d(y, y_\text{obs})\leq\varepsilon$
                             </li>
@@ -458,7 +458,7 @@ abc.run()
             <span style="font-weight: bold; font-size: 1.2em;">
             <ul>
                 <li>400 cores</li>
-                <li>3 days</li>
+                <li>2 days</li>
                 <li>1.8e6 simulations</li>
             </ul>
             </span>
@@ -490,7 +490,7 @@ abc.run()
 
         <section>
             <section>
-                <h1>Some details</h1>
+                <h1>Algorithmic details</h1>
             </section>
 
 
@@ -513,6 +513,7 @@ abc.run()
 
             <section>
                 <h2>Measurement noise</h2>
+                <small>Schälte et al., Bioinformatics 2020</small><br/>
                 How to efficiently account for measurement noise in ABC?
                 <img src="img/concept.svg" class="stretch"
                      alt="Measurement noise methods"/>
@@ -552,7 +553,7 @@ abc.run()
                     <li>ABC allows for reliable statistical inference</li>
                     <li>pyABC provides an easy-to-use framework</li>
                 </ul>
-                <span style="padding: 10px;">
+                <span class="fragment" style="padding: 10px;">
                     <img src="img/rose_hammer.svg"/>
                     <small>Not everything is a nail.</small>
                 </span>
